@@ -33,6 +33,11 @@ def get_weather(city="Bandung"):
         "lang" : "id"
     }
     data = requests.get(url, params=params).json()
+
+    # Kalau kota tidak ditemukan, fallback ke Bandung
+    if data.get("cod") != 200:
+        data = requests.get(url, params={**params, "q": "Bandung"}).json()
+
     return {
         "kota"      : data["name"],
         "cuaca"     : data["weather"][0]["description"],
