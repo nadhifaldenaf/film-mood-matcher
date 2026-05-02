@@ -99,14 +99,27 @@ MAX_DURASI = {
     "Bebas"               : 999,
 }
 
-def get_movies(mood, bahasa="Hollywood", durasi="Bebas", is_weekend=False):
-    genre_id    = MOOD_TO_GENRE.get(mood, 35)
+def get_movies(mood, bahasa="Hollywood", durasi="Bebas", is_weekend=False, genre_favorit=None):
+    # Genre favorit user lebih prioritas dari mood
+    GENRE_NAME_TO_ID = {
+        "Action"    : 28,
+        "Drama"     : 18,
+        "Comedy"    : 35,
+        "Adventure" : 12,
+        "Romance"   : 10749,
+        "Animation" : 16,
+        "Mystery"   : 9648,
+        "Horror"    : 27,
+    }
+    if genre_favorit and genre_favorit in GENRE_NAME_TO_ID:
+        genre_id = GENRE_NAME_TO_ID[genre_favorit]
+    else:
+        genre_id = MOOD_TO_GENRE.get(mood, 35)
     lang_code   = LANGUAGE_CODE.get(bahasa, "en")
     max_minutes = MAX_DURASI.get(durasi, 999)
 
     # Weekend → tambah genre Adventure/Action supaya lebih seru
-    if is_weekend and mood in ["santai", "cozy"]:
-        genre_id = 28
+    pass
 
     url    = "https://api.themoviedb.org/3/discover/movie"
     params = {
