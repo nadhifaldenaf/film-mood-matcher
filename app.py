@@ -473,7 +473,7 @@ else:
     st.markdown('<span class="section-label">Rekomendasi Film</span>', unsafe_allow_html=True)
 
     with st.spinner("Mencari film..."):
-        films = get_movies(mood, bahasa, durasi, is_weekend)
+        films = get_movies(mood, bahasa, durasi, is_weekend, genre_favorit=genre)
 
     if not films:
         st.warning("Tidak ada film yang cocok. Coba ubah preferensi di sidebar.")
