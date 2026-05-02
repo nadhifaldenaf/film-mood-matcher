@@ -9,6 +9,18 @@ load_dotenv()
 TMDB_KEY = os.getenv("TMDB_API_KEY")
 OW_KEY   = os.getenv("OPENWEATHER_API_KEY")
 
+def get_city_from_ip():
+    """Deteksi kota berdasarkan IP address pengunjung."""
+    try:
+        res = requests.get("http://ip-api.com/json/")
+        data = res.json()
+        if data["status"] == "success":
+            return data["city"]
+        else:
+            return "Bandung"  # fallback default
+    except:
+        return "Bandung"  # fallback kalau gagal
+
 # ─────────────────────────────────────────
 # 1. CUACA
 # ─────────────────────────────────────────

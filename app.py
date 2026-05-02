@@ -1,7 +1,7 @@
 # app.py — tampilan web Film Mood Matcher
 import streamlit as st
 from datetime import datetime
-from matcher import get_weather, get_mood, get_movies
+from matcher import get_weather, get_mood, get_movies, get_city_from_ip
 
 # ─────────────────────────────────────────
 # KONFIGURASI HALAMAN
@@ -32,14 +32,16 @@ with st.sidebar:
     )
 
     st.divider()
-    st.caption("📍 Lokasi: Bandung, Indonesia")
+    st.caption(f"📍 Lokasi: {city}")
     st.caption(f"🕐 Waktu: {datetime.now().strftime('%H:%M')}")
 
 # ─────────────────────────────────────────
 # MAIN — CUACA & MOOD
 # ─────────────────────────────────────────
-with st.spinner("📡 Mengambil data cuaca Bandung..."):
-    cuaca = get_weather()
+city = get_city_from_ip()
+
+with st.spinner(f"📡 Mengambil data cuaca {city}..."):
+    cuaca = get_weather(city)
 
 kode_cuaca = cuaca["kode_cuaca"]
 mood, waktu = get_mood(kode_cuaca)
