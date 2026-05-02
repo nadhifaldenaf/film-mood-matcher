@@ -99,7 +99,7 @@ MAX_DURASI = {
     "Bebas"               : 999,
 }
 
-def get_movies(mood, bahasa="Hollywood", durasi="Bebas", is_weekend=False, genre_favorit=None):
+def get_movies(mood, bahasa="Hollywood", is_weekend=False, genre_favorit=None):
     # Genre favorit user lebih prioritas dari mood
     GENRE_NAME_TO_ID = {
         "Action"    : 28,
@@ -116,7 +116,6 @@ def get_movies(mood, bahasa="Hollywood", durasi="Bebas", is_weekend=False, genre
     else:
         genre_id = MOOD_TO_GENRE.get(mood, 35)
     lang_code   = LANGUAGE_CODE.get(bahasa, "en")
-    max_minutes = MAX_DURASI.get(durasi, 999)
 
     # Weekend → tambah genre Adventure/Action supaya lebih seru
     pass
@@ -140,14 +139,14 @@ def get_movies(mood, bahasa="Hollywood", durasi="Bebas", is_weekend=False, genre
         detail     = requests.get(detail_url, params={"api_key": TMDB_KEY}).json()
         durasi_film = detail.get("runtime", 0)
 
-        if durasi_film and durasi_film <= max_minutes:
+        if durasi_film:
             films.append({
+                "id"     : movie["id"],
                 "judul"  : movie["title"],
                 "rating" : movie["vote_average"],
                 "tahun"  : movie["release_date"][:4] if movie["release_date"] else "N/A",
                 "sinopsis": movie["overview"][:150] + "..." if movie["overview"] else "Tidak ada sinopsis.",
                 "poster" : ("https://image.tmdb.org/t/p/w300" + movie["poster_path"]) if movie["poster_path"] else None,
-                "durasi" : durasi_film,
             })
 
         if len(films) == 5:  # cukup 5 film

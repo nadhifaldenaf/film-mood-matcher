@@ -15,315 +15,330 @@ st.set_page_config(
 )
 
 # ─────────────────────────────────────────
-# CUSTOM CSS — Cinematic Minimalist
+# CSS — Mobile-first, IMDB-inspired
 # ─────────────────────────────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Outfit:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=IBM+Plex+Serif:ital,wght@0,300;1,300;1,400&display=swap');
 
-/* ── Reset & Base ── */
-*, *::before, *::after { box-sizing: border-box; }
-
-html, body, [data-testid="stAppViewContainer"] {
-    background-color: #0a0a0a !important;
-    color: #e8e0d5 !important;
+:root {
+    --bg:       #0f0f0f;
+    --bg2:      #161616;
+    --bg3:      #1e1e1e;
+    --border:   rgba(255,255,255,0.07);
+    --gold:     #f5c518;
+    --gold-dim: rgba(245,197,24,0.15);
+    --text:     #f0f0f0;
+    --text-2:   #a0a0a0;
+    --text-3:   #555;
 }
 
-[data-testid="stAppViewContainer"] {
-    background-image:
-        radial-gradient(ellipse at 20% 20%, rgba(180,140,90,0.06) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 80%, rgba(120,90,60,0.05) 0%, transparent 60%);
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body,
+[data-testid="stAppViewContainer"],
+[data-testid="stApp"] {
+    background: var(--bg) !important;
+    color: var(--text) !important;
+    font-family: 'IBM Plex Sans', sans-serif !important;
 }
 
-[data-testid="stHeader"] { background: transparent !important; }
-[data-testid="stToolbar"] { display: none !important; }
+[data-testid="stHeader"],
+[data-testid="stToolbar"],
 footer { display: none !important; }
 
-/* ── Typography ── */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cormorant Garamond', serif !important;
-    color: #e8e0d5 !important;
-    letter-spacing: 0.02em;
-}
-
-p, li, span, label, div {
-    font-family: 'Outfit', sans-serif !important;
-    color: #b0a898 !important;
-}
-
-/* ── Main container ── */
 .block-container {
-    max-width: 680px !important;
-    padding: 4rem 2rem !important;
+    max-width: 480px !important;
+    padding: 0 0 4rem !important;
+    margin: 0 auto !important;
 }
 
-/* ── Hero header ── */
-.hero {
-    text-align: center;
-    padding: 3rem 0 2rem;
-    border-bottom: 1px solid rgba(180,140,90,0.15);
-    margin-bottom: 3rem;
-}
-.hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3.2rem;
-    font-weight: 300;
-    color: #e8e0d5;
-    letter-spacing: 0.08em;
-    line-height: 1.1;
-    margin: 0;
-}
-.hero-title span {
-    font-style: italic;
-    color: #c4a96e !important;
-}
-.hero-sub {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: #6b6058 !important;
-    margin-top: 0.8rem;
-}
-
-/* ── Section label ── */
-.section-label {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.68rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #c4a96e !important;
-    margin-bottom: 1.5rem;
-    display: block;
-}
-
-/* ── Form inputs ── */
-[data-testid="stTextInput"] input,
-[data-testid="stSelectbox"] > div > div {
-    background: rgba(255,255,255,0.03) !important;
-    border: 1px solid rgba(180,140,90,0.2) !important;
-    border-radius: 4px !important;
-    color: #e8e0d5 !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.9rem !important;
-    transition: border-color 0.2s ease;
-}
-[data-testid="stTextInput"] input:focus {
-    border-color: rgba(196,169,110,0.5) !important;
-    box-shadow: 0 0 0 1px rgba(196,169,110,0.15) !important;
-}
-
-/* Input labels */
-[data-testid="stTextInput"] label,
-[data-testid="stSelectbox"] label {
-    font-size: 0.68rem !important;
-    letter-spacing: 0.2em !important;
-    text-transform: uppercase !important;
-    color: #6b6058 !important;
-    font-family: 'Outfit', sans-serif !important;
-}
-
-/* ── Submit button ── */
-[data-testid="stFormSubmitButton"] button {
-    background: transparent !important;
-    border: 1px solid rgba(196,169,110,0.4) !important;
-    color: #c4a96e !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.3em !important;
-    text-transform: uppercase !important;
-    padding: 0.75rem 2.5rem !important;
-    border-radius: 2px !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    width: 100% !important;
-    margin-top: 1rem !important;
-}
-[data-testid="stFormSubmitButton"] button:hover {
-    background: rgba(196,169,110,0.08) !important;
-    border-color: rgba(196,169,110,0.7) !important;
-}
-
-/* ── Regular button (reset) ── */
-[data-testid="stButton"] button {
-    background: transparent !important;
-    border: 1px solid rgba(180,140,90,0.2) !important;
-    color: #6b6058 !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-size: 0.68rem !important;
-    letter-spacing: 0.2em !important;
-    text-transform: uppercase !important;
-    border-radius: 2px !important;
-    transition: all 0.2s ease !important;
-}
-[data-testid="stButton"] button:hover {
-    border-color: rgba(196,169,110,0.4) !important;
-    color: #c4a96e !important;
-}
-
-/* ── Weather bar ── */
-.weather-bar {
+/* ── TOP NAV ── */
+.topnav {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 1rem;
     display: flex;
-    gap: 0;
-    border: 1px solid rgba(180,140,90,0.15);
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 1.5rem 0;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
-.weather-item {
-    flex: 1;
-    padding: 1rem;
-    text-align: center;
-    border-right: 1px solid rgba(180,140,90,0.1);
+.topnav-logo {
+    font-family: 'IBM Plex Serif', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--gold) !important;
 }
-.weather-item:last-child { border-right: none; }
-.weather-val {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 300;
-    color: #e8e0d5;
-    display: block;
-    line-height: 1;
-}
-.weather-key {
+.topnav-sub {
     font-size: 0.62rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #4a4540 !important;
-    display: block;
-    margin-top: 0.3rem;
+    color: var(--text-3) !important;
 }
 
-/* ── Mood display ── */
-.mood-display {
-    text-align: center;
-    padding: 2.5rem 0;
-    border-bottom: 1px solid rgba(180,140,90,0.1);
-    margin-bottom: 2.5rem;
-}
-.mood-word {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4rem;
-    font-weight: 300;
-    font-style: italic;
-    color: #c4a96e;
-    display: block;
-    letter-spacing: 0.05em;
-    line-height: 1;
-}
-.mood-meta {
-    font-size: 0.68rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: #4a4540 !important;
-    margin-top: 0.6rem;
-}
-
-/* ── Film card ── */
-.film-card {
+/* ── WEATHER STRIP ── */
+.weather-strip {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0.65rem 1rem;
     display: flex;
-    gap: 1.5rem;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid rgba(180,140,90,0.08);
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    color: var(--text-2) !important;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
 }
-.film-card:last-child { border-bottom: none; }
-.film-poster {
-    width: 80px;
+.weather-strip::-webkit-scrollbar { display: none; }
+.weather-strip b { color: var(--text) !important; font-weight: 500; }
+.wdot {
+    width: 3px; height: 3px;
+    background: var(--text-3);
+    border-radius: 50%;
     flex-shrink: 0;
+    display: inline-block;
 }
-.film-poster img {
-    width: 80px;
+
+/* ── MOOD HERO ── */
+.mood-hero {
+    padding: 1.8rem 1rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+}
+.mood-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-3) !important;
+    margin-bottom: 0.35rem;
+}
+.mood-title {
+    font-family: 'IBM Plex Serif', serif;
+    font-style: italic;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--gold) !important;
+    line-height: 1;
+    margin-bottom: 0.7rem;
+}
+.mood-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+.mood-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3) !important;
+    border: 1px solid var(--border);
     border-radius: 2px;
-    display: block;
+    padding: 0.15rem 0.45rem;
+}
+
+/* ── SECTION HEADER ── */
+.section-head {
+    padding: 0.9rem 1rem 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+}
+.section-head-title {
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-3) !important;
+}
+.section-head-count {
+    font-size: 0.65rem;
+    color: var(--text-3) !important;
+}
+
+/* ── FILM ITEM ── */
+.film-item {
+    display: flex;
+    gap: 0.85rem;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none !important;
+    transition: background 0.12s;
+}
+.film-item:hover { background: var(--bg2); }
+
+.film-rank {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-3) !important;
+    min-width: 1.1rem;
+    padding-top: 0.15rem;
+}
+
+.film-poster-wrap {
+    flex-shrink: 0;
+    width: 54px;
+    height: 81px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+}
+.film-poster-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
 }
 .film-no-poster {
-    width: 80px;
-    height: 120px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(180,140,90,0.1);
-    border-radius: 2px;
+    width: 100%; height: 100%;
+    display: flex; align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.film-body { flex: 1; min-width: 0; }
+
+.film-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text) !important;
+    line-height: 1.25;
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.film-meta-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
 }
-.film-info { flex: 1; }
-.film-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 400;
-    color: #e8e0d5;
-    line-height: 1.2;
+.film-year { font-size: 0.7rem; color: var(--text-3) !important; }
+.film-rating {
+    display: flex; align-items: center; gap: 0.18rem;
+    background: var(--gold-dim);
+    border-radius: 2px; padding: 0.08rem 0.3rem;
+}
+.film-rating-star { color: var(--gold) !important; font-size: 0.62rem; }
+.film-rating-val  { font-size: 0.7rem; font-weight: 600; color: var(--gold) !important; }
+
+.film-synopsis {
+    font-size: 0.73rem;
+    line-height: 1.5;
+    color: var(--text-2) !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.film-arrow {
+    color: var(--text-3) !important;
+    font-size: 1rem;
+    align-self: center;
+    flex-shrink: 0;
+    margin-left: 0.2rem;
+}
+
+/* ── FORM ── */
+.form-wrap { padding: 1.5rem 1rem 0.5rem; }
+.form-title {
+    font-family: 'IBM Plex Serif', serif;
+    font-style: italic;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--text) !important;
+    line-height: 1.15;
     margin-bottom: 0.3rem;
 }
-.film-meta {
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    color: #c4a96e !important;
-    margin-bottom: 0.6rem;
-}
-.film-synopsis {
-    font-size: 0.82rem;
-    line-height: 1.6;
-    color: #5a5450 !important;
-}
-
-/* ── Divider ── */
-.gold-divider {
-    border: none;
-    border-top: 1px solid rgba(180,140,90,0.12);
-    margin: 2rem 0;
-}
-
-/* ── Info row (nama, kota, waktu) ── */
-.info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(180,140,90,0.1);
-    margin-bottom: 2rem;
-}
-.info-item {
+.form-sub {
     font-size: 0.72rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #4a4540 !important;
-}
-.info-item span {
-    color: #8a7e72 !important;
+    color: var(--text-3) !important;
+    margin-bottom: 1.2rem;
 }
 
-/* ── Selectbox dropdown ── */
-[data-testid="stSelectbox"] svg { fill: #6b6058 !important; }
+[data-testid="stTextInput"] label,
+[data-testid="stSelectbox"] label {
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 0.62rem !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+    color: var(--text-3) !important;
+}
+[data-testid="stTextInput"] input {
+    background: var(--bg2) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 3px !important;
+    color: var(--text) !important;
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 0.88rem !important;
+}
+[data-testid="stTextInput"] input:focus {
+    border-color: rgba(245,197,24,0.35) !important;
+    box-shadow: 0 0 0 2px rgba(245,197,24,0.07) !important;
+}
+[data-testid="stSelectbox"] > div > div {
+    background: var(--bg2) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 3px !important;
+    color: var(--text) !important;
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 0.88rem !important;
+}
+[data-testid="stSelectbox"] svg { fill: var(--text-3) !important; }
 
-/* ── Warning ── */
-[data-testid="stAlert"] {
-    background: rgba(196,169,110,0.05) !important;
-    border: 1px solid rgba(196,169,110,0.2) !important;
-    border-radius: 4px !important;
-    color: #c4a96e !important;
+[data-testid="stFormSubmitButton"] button {
+    width: 100% !important;
+    background: var(--gold) !important;
+    border: none !important;
+    border-radius: 3px !important;
+    color: #0f0f0f !important;
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+    padding: 0.7rem !important;
+    margin-top: 0.5rem !important;
+    transition: opacity 0.15s !important;
+}
+[data-testid="stFormSubmitButton"] button:hover { opacity: 0.85 !important; }
+
+[data-testid="stButton"] button {
+    background: transparent !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-3) !important;
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    border-radius: 3px !important;
+}
+[data-testid="stButton"] button:hover {
+    border-color: var(--gold) !important;
+    color: var(--gold) !important;
 }
 
-/* ── Spinner ── */
-[data-testid="stSpinner"] { color: #c4a96e !important; }
-
-/* ── Sidebar ── */
 [data-testid="stSidebar"] {
-    background: #080808 !important;
-    border-right: 1px solid rgba(180,140,90,0.1) !important;
+    background: #0a0a0a !important;
+    border-right: 1px solid var(--border) !important;
+}
+[data-testid="stAlert"] {
+    background: rgba(245,197,24,0.05) !important;
+    border: 1px solid rgba(245,197,24,0.2) !important;
+    color: var(--gold) !important;
+    font-size: 0.78rem !important;
+    border-radius: 3px !important;
+    margin: 0.5rem 1rem !important;
+}
+[data-testid="stSpinner"] p {
+    font-size: 0.72rem !important;
+    color: var(--text-3) !important;
 }
 </style>
-""", unsafe_allow_html=True)
-
-# ─────────────────────────────────────────
-# HERO HEADER
-# ─────────────────────────────────────────
-st.markdown("""
-<div class="hero">
-    <h1 class="hero-title">Film <span>Mood</span> Matcher</h1>
-    <p class="hero-sub">Cuaca · Waktu · Selera</p>
-</div>
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────
@@ -338,13 +353,30 @@ if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
 # ─────────────────────────────────────────
+# TOP NAV
+# ─────────────────────────────────────────
+st.markdown("""
+<div class="topnav">
+    <div class="topnav-logo">Mood Matcher</div>
+    <div class="topnav-sub">Film · Cuaca · Waktu</div>
+</div>
+""", unsafe_allow_html=True)
+
+# ─────────────────────────────────────────
 # KUESIONER
 # ─────────────────────────────────────────
 if not st.session_state.submitted:
-    st.markdown('<span class="section-label">Profil Kamu</span>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="form-wrap">
+        <div class="form-title">Halo,<br>siapa kamu?</div>
+        <div class="form-sub">Isi profil singkat untuk rekomendasi yang pas.</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     with st.form("kuesioner"):
-        nama = st.text_input("Nama", placeholder="Siapa kamu?")
+        st.markdown('<div style="padding:0 1rem 1rem;">', unsafe_allow_html=True)
+
+        nama = st.text_input("Nama", placeholder="Nama kamu")
         kota = st.text_input("Kota", value=city, placeholder="Kota tempat kamu berada")
 
         col1, col2 = st.columns(2)
@@ -361,8 +393,8 @@ if not st.session_state.submitted:
 
         col3, col4 = st.columns(2)
         with col3:
-            durasi = st.selectbox("Durasi Nonton", [
-                "Santai (~1 jam)", "Standar (~2 jam)", "Bebas"
+            bahasa = st.selectbox("Bahasa Film", [
+                "Hollywood", "Indonesia", "Korea"
             ])
         with col4:
             timezone_pilihan = st.selectbox("Zona Waktu", [
@@ -377,7 +409,8 @@ if not st.session_state.submitted:
                 "America/Los_Angeles"
             ])
 
-        submit = st.form_submit_button("Temukan Film")
+        submit = st.form_submit_button("Temukan Film →")
+        st.markdown('</div>', unsafe_allow_html=True)
 
     if submit:
         if not nama:
@@ -385,14 +418,13 @@ if not st.session_state.submitted:
         else:
             tz_key = timezone_pilihan.split(" ")[0]
             with st.spinner("Menyimpan..."):
-                save_to_sheets(nama, kota, genre, mood_pilihan, durasi)
-
+                save_to_sheets(nama, kota, genre, mood_pilihan, bahasa)
             st.session_state.submitted    = True
             st.session_state.nama         = nama
             st.session_state.kota         = kota
             st.session_state.genre        = genre
             st.session_state.mood_pilihan = mood_pilihan
-            st.session_state.durasi       = durasi
+            st.session_state.bahasa       = bahasa
             st.session_state.timezone     = tz_key
             st.rerun()
 
@@ -404,21 +436,19 @@ else:
     kota         = st.session_state.kota
     genre        = st.session_state.genre
     mood_pilihan = st.session_state.mood_pilihan
-    durasi       = st.session_state.durasi
+    bahasa       = st.session_state.bahasa
     tz_key       = st.session_state.timezone
 
     tz  = pytz.timezone(tz_key)
     now = datetime.now(tz)
 
-    # Sidebar — preferensi bahasa
+    # Sidebar
     with st.sidebar:
-        st.markdown('<span class="section-label">Preferensi</span>', unsafe_allow_html=True)
-        bahasa = st.selectbox("Bahasa Film", ["Hollywood", "Indonesia", "Korea"])
-        st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
-        st.markdown(f'<p class="info-item">👤 <span>{nama}</span></p>', unsafe_allow_html=True)
-        st.markdown(f'<p class="info-item">📍 <span>{kota}</span></p>', unsafe_allow_html=True)
-        st.markdown(f'<p class="info-item">🕐 <span>{now.strftime("%H:%M")} {tz_key.split("/")[-1]}</span></p>', unsafe_allow_html=True)
-        st.markdown('<hr class="gold-divider">', unsafe_allow_html=True)
+        st.markdown('<div style="padding:1rem 0 0.5rem;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:#555;">Preferensi</div>', unsafe_allow_html=True)
+        bahasa = st.selectbox("Bahasa Film", ["Hollywood", "Indonesia", "Korea"],
+                              index=["Hollywood","Indonesia","Korea"].index(bahasa))
+        st.markdown(f'<div style="margin-top:1rem;font-size:0.7rem;color:#555;line-height:2.2;">👤 {nama}<br>📍 {kota}<br>🕐 {now.strftime("%H:%M")} {tz_key.split("/")[-1]}</div>', unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
         if st.button("↩ Isi Ulang"):
             st.session_state.submitted = False
             st.rerun()
@@ -436,61 +466,74 @@ else:
         mood  = mood_pilihan.lower()
         waktu = now.strftime("%H:%M")
 
-    # Weather bar
+    is_weekend = now.weekday() >= 5
+    hari_label = "Weekend" if is_weekend else now.strftime("%A")
+
+    # Weather strip
     st.markdown(f"""
-    <div class="weather-bar">
-        <div class="weather-item">
-            <span class="weather-val">{cuaca['cuaca'].title()}</span>
-            <span class="weather-key">Cuaca</span>
-        </div>
-        <div class="weather-item">
-            <span class="weather-val">{cuaca['suhu']}°</span>
-            <span class="weather-key">Celsius</span>
-        </div>
-        <div class="weather-item">
-            <span class="weather-val">{cuaca['kelembaban']}%</span>
-            <span class="weather-key">Kelembaban</span>
-        </div>
-        <div class="weather-item">
-            <span class="weather-val">{now.strftime('%H:%M')}</span>
-            <span class="weather-key">{tz_key.split('/')[-1]}</span>
+    <div class="weather-strip">
+        <b>{kota}</b>
+        <span class="wdot"></span>
+        {cuaca['cuaca'].title()}
+        <span class="wdot"></span>
+        <b>{cuaca['suhu']}°C</b>
+        <span class="wdot"></span>
+        {cuaca['kelembaban']}% lembab
+        <span class="wdot"></span>
+        {now.strftime('%H:%M')} {tz_key.split('/')[-1]}
+        <span class="wdot"></span>
+        {hari_label}
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Mood hero
+    st.markdown(f"""
+    <div class="mood-hero">
+        <div class="mood-label">Mood kamu sekarang</div>
+        <div class="mood-title">{mood.title()}</div>
+        <div class="mood-tags">
+            <span class="mood-tag">{genre}</span>
+            <span class="mood-tag">{bahasa}</span>
+            <span class="mood-tag">{nama}</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Mood display
-    is_weekend  = now.weekday() >= 5
-    hari_label  = "Weekend" if is_weekend else now.strftime("%A")
-
-    st.markdown(f"""
-    <div class="mood-display">
-        <span class="mood-word">{mood.title()}</span>
-        <p class="mood-meta">{kota} · {hari_label} · {waktu if mood_pilihan == 'Ikuti cuaca' else 'Pilihan sendiri'}</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Rekomendasi film
-    st.markdown('<span class="section-label">Rekomendasi Film</span>', unsafe_allow_html=True)
-
+    # Cari film
     with st.spinner("Mencari film..."):
-        films = get_movies(mood, bahasa, durasi, is_weekend, genre_favorit=genre)
+        films = get_movies(mood, bahasa, is_weekend, genre_favorit=genre)
 
     if not films:
         st.warning("Tidak ada film yang cocok. Coba ubah preferensi di sidebar.")
     else:
-        for film in films:
+        st.markdown(f"""
+        <div class="section-head">
+            <span class="section-head-title">Rekomendasi</span>
+            <span class="section-head-count">{len(films)} film</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        for i, film in enumerate(films, start=1):
+            tmdb_url    = f"https://www.themoviedb.org/movie/{film.get('id', '')}"
             poster_html = (
                 f'<img src="{film["poster"]}" alt="{film["judul"]}">'
-                if film["poster"]
-                else '<div class="film-no-poster">🎞</div>'
+                if film["poster"] else '<div class="film-no-poster">🎞</div>'
             )
             st.markdown(f"""
-            <div class="film-card">
-                <div class="film-poster">{poster_html}</div>
-                <div class="film-info">
-                    <div class="film-title">{film['judul']}</div>
-                    <div class="film-meta">{film['tahun']} &nbsp;·&nbsp; ⭐ {film['rating']} &nbsp;·&nbsp; {film['durasi']} min</div>
+            <a class="film-item" href="{tmdb_url}" target="_blank">
+                <div class="film-rank">{i}</div>
+                <div class="film-poster-wrap">{poster_html}</div>
+                <div class="film-body">
+                    <div class="film-name">{film['judul']}</div>
+                    <div class="film-meta-row">
+                        <span class="film-year">{film['tahun']}</span>
+                        <div class="film-rating">
+                            <span class="film-rating-star">★</span>
+                            <span class="film-rating-val">{film['rating']}</span>
+                        </div>
+                    </div>
                     <div class="film-synopsis">{film['sinopsis']}</div>
                 </div>
-            </div>
+                <div class="film-arrow">›</div>
+            </a>
             """, unsafe_allow_html=True)
