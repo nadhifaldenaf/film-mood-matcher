@@ -18,6 +18,9 @@ st.caption("Rekomendasi film berdasarkan cuaca, waktu, dan seleramu")
 # ─────────────────────────────────────────
 # SIDEBAR — PREFERENSI USER
 # ─────────────────────────────────────────
+
+city = get_city_from_ip()
+
 with st.sidebar:
     st.header("⚙️ Preferensi")
 
