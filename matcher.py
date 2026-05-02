@@ -9,17 +9,17 @@ load_dotenv()
 TMDB_KEY = os.getenv("TMDB_API_KEY")
 OW_KEY   = os.getenv("OPENWEATHER_API_KEY")
 
-def get_city_from_ip():
-    """Deteksi kota berdasarkan IP address pengunjung."""
+def get_location_from_ip():
+    """Deteksi kota dan timezone berdasarkan IP address pengunjung."""
     try:
-        res = requests.get("http://ip-api.com/json/")
+        res  = requests.get("http://ip-api.com/json/")
         data = res.json()
         if data["status"] == "success":
-            return data["city"]
+            return data["city"], data["timezone"]
         else:
-            return "Bandung"  # fallback default
+            return "Bandung", "Asia/Jakarta"
     except:
-        return "Bandung"  # fallback kalau gagal
+        return "Bandung", "Asia/Jakarta"
 
 # ─────────────────────────────────────────
 # 1. CUACA
@@ -44,8 +44,9 @@ def get_weather(city="Bandung"):
 # ─────────────────────────────────────────
 # 2. MOOD
 # ─────────────────────────────────────────
-def get_mood(kode_cuaca):
-    jam   = datetime.now().hour
+def get_mood(kode_cuaca, jam=None):
+    if jam is None:
+        jam = datetime.now().hour
     if 5 <= jam < 12:
         waktu = "pagi"
     elif 12 <= jam < 17:

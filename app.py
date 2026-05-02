@@ -1,7 +1,8 @@
 # app.py — tampilan web Film Mood Matcher
 import streamlit as st
 from datetime import datetime
-from matcher import get_weather, get_mood, get_movies, get_city_from_ip
+from matcher import get_weather, get_mood, get_movies, get_location_from_ip
+import pytz
 
 # ─────────────────────────────────────────
 # KONFIGURASI HALAMAN
@@ -19,7 +20,9 @@ st.caption("Rekomendasi film berdasarkan cuaca, waktu, dan seleramu")
 # SIDEBAR — PREFERENSI USER
 # ─────────────────────────────────────────
 
-city = get_city_from_ip()
+city, timezone = get_location_from_ip()
+tz   = pytz.timezone(timezone)
+now  = datetime.now(tz)
 
 with st.sidebar:
     st.header("⚙️ Preferensi")
@@ -36,18 +39,20 @@ with st.sidebar:
 
     st.divider()
     st.caption(f"📍 Lokasi: {city}")
-    st.caption(f"🕐 Waktu: {datetime.now().strftime('%H:%M')}")
+    st.caption(f"🕐 Waktu: {now.strftime('%H:%M')} ({timezone})")
 
 # ─────────────────────────────────────────
 # MAIN — CUACA & MOOD
 # ─────────────────────────────────────────
-city = get_city_from_ip()
+city, timezone = get_location_from_ip()
+tz   = pytz.timezone(timezone)
+now  = datetime.now(tz)
 
 with st.spinner(f"📡 Mengambil data cuaca {city}..."):
     cuaca = get_weather(city)
 
 kode_cuaca = cuaca["kode_cuaca"]
-mood, waktu = get_mood(kode_cuaca)
+mood, waktu = get_mood(kode_cuaca, now.hour)
 
 # Tampilkan info cuaca
 col1, col2, col3 = st.columns(3)
